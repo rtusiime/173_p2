@@ -4,5 +4,7 @@
 
 #ifndef UNTITLED1_RECURSIVE_DESCENT_H
 #define UNTITLED1_RECURSIVE_DESCENT_H
-extern void recursive_descent_repl();
+
+extern void recursive_descent_parse_print();
+
 #endif //UNTITLED1_RECURSIVE_DESCENT_H

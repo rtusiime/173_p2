@@ -68,9 +68,9 @@ extern void set_production(table parsing_table, int category, char sym, int prod
 extern void set_production_str(table parsing_table, int category, char *str, int production);
 
 /**
- * REPL for table_driven_parser
+ * Parse and print for table_driven_parser
  */
-extern   void  table_driven_parser_repl();
+extern void table_driven_parse_print(char* string);
 
 /**
  * adding elements of the production to the tree as children

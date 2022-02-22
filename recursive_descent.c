@@ -158,19 +158,13 @@ tree* Digit() {
     return NULL;
 }
 
-void recursive_descent_repl() {
-    while (!feof(stdin)) { // loop until end of file (ctrl-d)
-        printf("Enter string to parse: \n");
-        char word[255];
-        scanf("%s", word);
-        input = word;
-        input_length = strlen(input);
-        tree* tree = Expr();
-        // if input_length > 0, the entire string hasn't been parsed
-        if (tree == NULL || input_length > 0) {
-            printf("Could not parse input.\n");
-        } else {
-            print_tree(tree);
-        }
+void recursive_descent_parse_print(char* word) {
+    input = word;
+    input_length = strlen(input);
+    tree* tree = Expr();
+    if (tree == NULL || input_length > 0) {
+        printf("Could not parse input.\n");
+    } else {
+        print_tree(tree);
     }
 }

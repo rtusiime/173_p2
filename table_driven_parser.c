@@ -5,8 +5,6 @@
 #include "LinkedList.h"
 #include "table_driven_parser.h"
 
-
-
 //PRODUCTIONS
 /*
  *1)⟨Expr ⟩ → ⟨Atomic⟩ ⟨ExprTail⟩
@@ -141,19 +139,17 @@ table table_for_grammar(){
  * if stack is empty, look ahead==EOM, accept. if lookahead!=eom, reject.
  */
 tree* parser(table table, char* string){
-    printf("boogers");
     LinkedList stack = new_LinkedList();
     LinkedList_add_at_front(stack,"Expr");
-    printf("------------PRINTING STACK--------------\n");
-    LinkedList_print(stack);
-    printf("\n");
     int len = strlen(string);
     tree* parse_tree = makeNode0("Expr");
     while(!LinkedList_isEmpty(stack)) {
         char *symbol = LinkedList_pop(stack);
         int category_terminal_no = is_category_or_terminal(symbol);
 
-        if (category_terminal_no < 0)return NULL;//if for some reason we get an invalid element
+        if (category_terminal_no < 0){
+            return NULL; //if for some reason we get an invalid element
+        }
         else if (category_terminal_no <= 10) {//if it's category, check table and return production
             int production = get_production(table, category_terminal_no, *string);
             if (production == 0)return NULL;//if there's no production for the given category and symbol
@@ -161,11 +157,13 @@ tree* parser(table table, char* string){
         } else {//if it's a terminal, match and consume
             //actually---------------> IMPORTANT, e is a special case, we won't consume, we will just continue
             if(*symbol=='e')continue;
-            if (!matcher(&string, *symbol, &len)) { return NULL; }
+            if (!matcher(&string, *symbol, &len)) {
+                return NULL;
+            }
         }
     }
-    if(LinkedList_isEmpty(stack)&& len<=0)return parse_tree;
-    else return NULL;
+    if(LinkedList_isEmpty(stack)&& len<=0) return parse_tree;
+    return NULL;
 }
 
 /*
@@ -201,9 +199,6 @@ void push_elements(tree* parse_tree, LinkedList stack, int production){
         case 1:
             LinkedList_add_at_front(stack,"ExprTail");
             LinkedList_add_at_front(stack,"Atomic");
-            printf("------------PRINTING STACK--------------\n");
-            LinkedList_print(stack);
-            printf("\n");
             char *p_one[2] = {"Atomic","ExprTail",};
             add_to_tree(parse_tree,p_one,2);
             flag=false;
@@ -370,14 +365,6 @@ void push_elements(tree* parse_tree, LinkedList stack, int production){
             flag=false;
             break;
     }
-    printf("-----------------------------\n");
-    printf("production is %d \n", production);
-    printf("---------------PRINTING TREE--------------\n");
-    print_tree(parse_tree);
-    printf("\n");
-    printf("------------PRINTING STACK--------------\n");
-    LinkedList_print(stack);
-    printf("\n");
 }
 
 int is_category_or_terminal(char* string){
@@ -437,18 +424,12 @@ void set_production_str(table parsing_table, int category, char *str, int produc
     }
 }
 
-
-void table_driven_parser_repl() {
-    while (!feof(stdin)) { // loop until end of file (ctrl-d)
-        printf("Enter string to parse: \n");
-        char word[255];
-        scanf("%s", word);
-        table parse_table =table_for_grammar();
-        tree* tree = parser(parse_table,word);//Expr()
-        if (tree == NULL) {
-            printf("Could not parse input.\n");
-        } else {
-            print_tree(tree);
-        }
+void table_driven_parse_print(char* word) {
+    table parse_table = table_for_grammar();
+    tree* tree = parser(parse_table,word);//Expr()
+    if (tree == NULL) {
+        printf("Could not parse input.\n");
+    } else {
+        print_tree(tree);
     }
 }
