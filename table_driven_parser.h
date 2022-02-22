@@ -15,7 +15,7 @@
 //parsing table
 typedef int** table;
 
-extern bool matcher(char* input_str , char stack_element, int* len);
+extern bool matcher(char** input_str , char stack_element, int* len);
 
 /**
  * creates parsing table

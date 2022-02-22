@@ -12,7 +12,7 @@
  */
 typedef struct Node* Node;
 struct Node {
-    void *data;
+    char *data;
     Node next;
     Node prev;
 };
@@ -246,7 +246,7 @@ int get_LinkedList_size(const LinkedList linked_list) {
 void LinkedList_print(LinkedList this) {
     printf("[");
     for (Node node=this->first; node != NULL; node=node->next) {
-        IntHashSet_print((node->data));
+        printf("%s",node->data);
         if (node->next != NULL) {
             printf(" ");
         }

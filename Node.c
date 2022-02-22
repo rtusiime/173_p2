@@ -62,11 +62,8 @@ tree* addChild(tree* t, char* label){
 
 // Adds a sibling to a list with starting with n
 tree* addSibling(tree* t, char* label){
-    if (t == NULL){
-        return NULL;
-    }
-    while (t->rightSibling!=NULL){
-        t = t->rightSibling;
+    if(t->rightSibling!=NULL){
+        addSibling(t->rightSibling, label);
     }
     t->rightSibling = makeNode0(label);
     return t->rightSibling;
