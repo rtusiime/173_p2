@@ -166,7 +166,8 @@ void recursive_descent_repl() {
         input = word;
         input_length = strlen(input);
         tree* tree = Expr();
-        if (tree == NULL) {
+        // if input_length > 0, the entire string hasn't been parsed
+        if (tree == NULL || input_length > 0) {
             printf("Could not parse input.\n");
         } else {
             print_tree(tree);
