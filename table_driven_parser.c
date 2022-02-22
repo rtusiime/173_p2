@@ -90,12 +90,13 @@ table table_for_grammar(){
     set_production(parsing_table,0,'(',1);
     set_production(parsing_table,0,'{',1);
 
-    set_production(parsing_table,1,'e',4);
+    set_production(parsing_table, 1, '\0', 4); // \0 is end of string
+    set_production_str(parsing_table, 1, "(),{}0123456789", 4);
     set_production(parsing_table,1,'U',2);
     set_production(parsing_table,1,'^',3);
 
     set_production(parsing_table,2,'{',6);
-    set_production(parsing_table,2,'}',5);
+    set_production(parsing_table,2,'(',5);
 
     set_production(parsing_table,3,'{',7);
 
@@ -104,15 +105,15 @@ table table_for_grammar(){
 
     set_production_str(parsing_table,5,"0123456789",10);
 
-    set_production_str(parsing_table,6,"0123456789eU^{,()",12);
-    set_production(parsing_table,6,'}',11);
+    set_production_str(parsing_table,6,"0123456789U^{()}",12);
+    set_production(parsing_table,6,',',11);
 
     set_production_str(parsing_table,7,"0123456789",13);
 
     set_production_str(parsing_table,8,"0123456789",14);
 
     set_production_str(parsing_table,9,"0123456789",15);
-    set_production_str(parsing_table,9,"eU^{,()",16);
+    set_production_str(parsing_table,9,"U^{},()",16);
 
     set_production(parsing_table,10,'0',17);
     set_production(parsing_table,10,'1',18);
